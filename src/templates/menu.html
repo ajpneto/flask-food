@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+
+{% block title %}Menu
+{% endblock title %}
+
+
+{% block body %}
+
+<div class="container col-md-12">
+<center>
+<h2 class="fw-bolder">
+    Gestão de Cardápio, Reservas e muito mais!
+</h1>
+<h4 class="mb-3 mt-3">
+    Cardápio sempre atualizado com edições em tempo real.
+</h4></center><br>
+</div><hr>
+
+        <!-- Menu Start -->
+    <div class="container-fluid py-5 text-center wow fadeIn">
+<!--        <h2 class="section-title py-5">Sugestão do Chef</h2>-->
+        <div class="row justify-content-center">
+            <div class="col-sm-7 col-md-4 mb-5">
+                <ul class="nav nav-pills nav-justified mb-3" id="pills-tab" role="tablist">
+<!--                    <li class="nav-item">
+                        <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#foods" role="tab" aria-controls="pills-home" aria-selected="true">Foods</a>
+                    </li>-->
+                        <li class="nav-item">
+                            <a class="d-flex align-items-center text-start mx-3 ms-0 pb-3 active" data-toggle="pill" href="#foods" role="tab" aria-controls="pills-home" aria-selected="true">
+                                <i class="fa fa-door-open fa-2x text-secondary"></i>
+                                <div class="ps-3">
+                                    <small class="text-body">Terça à Domingo</small>
+                                </div>
+                            </a>
+                        </li>
+{% for category in items_by_category:  %}
+                        <li class="nav-item">
+                            <a class="d-flex align-items-center text-start mx-3 ms-0 pb-3" data-toggle="pill" href="#{{category}}" role="tab" aria-controls="pills-home" aria-selected="true">
+                                <i class="fa fa-{{category}} fa-2x text-primary"></i>
+                                <div class="ps-3">
+                                    <small class="text-body">{{category}}</small>
+                                </div>
+                            </a>
+                        </li>
+{% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="foods" role="tabpanel" aria-labelledby="pills-home-tab">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card border my-3 my-md-0">
+                            <img src="{{ url_for ('static', filename='uploads/tandoor_roti.png') }}" alt="" class="rounded-0 card-img-top mg-responsive">
+                            <div class="card-body">
+                                <h1 class="text-center">R$25,00</h1>
+                                <h4>Reiciendis Laborum </h4>
+                                <p class="text-dark">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa provident illum officiis fugit laudantium voluptatem sit iste delectus qui ex. </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card border my-3 my-md-0">
+                            <img src="{{ url_for ('static', filename='uploads/roasted_papad.png') }}" alt="" class="rounded-0 card-img-top mg-responsive">
+                            <div class="card-body">
+                                <h1 class="text-center">R$12,00</h1>
+                                <h4>Adipisci Totam</h4>
+                                <p class="text-dark">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa provident illum officiis fugit laudantium voluptatem sit iste delectus qui ex. </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card border my-3 my-md-0">
+                            <img src="{{ url_for ('static', filename='uploads/masala_papad_uLBfzPx.png') }}" alt="" class="rounded-0 card-img-top mg-responsive">
+                            <div class="card-body">
+                                <h1 class="text-center">R$8,00</h1>
+                                <h4>Dicta Deserunt</h4>
+                                <p class="text-dark">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa provident illum officiis fugit laudantium voluptatem sit iste delectus qui ex. </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+{% for category, products in items_by_category.items():  %}
+            <div class="tab-pane fade" id="{{category}}" role="tabpanel" aria-labelledby="pills-profile-tab">
+                <div class="row">
+{% for i in products: %}
+                    <div class="col-md-3 my-3 my-md-0">
+                        <div class="card border">
+                            <img src="{{i.pic}}" alt="" class="rounded-0 card-img-top mg-responsive">
+                            <div class="card-body">
+                                <h1 class="text-center">R${{i.price}}</h1>
+                                <h4>{{i.name}}</h4>
+                                <p class="dark">{{i.desc}}</p>
+                            </div>
+                        </div>
+                    </div>
+{% endfor %}
+                </div>
+            </div>
+{% endfor %}
+        </div>
+    </div>
+        <!-- Menu End -->
+
+
+{% for category, menu_items in items_by_category.items() %}
+  <h3 style="margin:40px 25px 5px">{{category}}:</h3>
+<div class="row justify-content-center">
+{% for i in menu_items %}
+<div class="card" style="width: 18rem; margin:20px 20px 10px; ">
+  <img src="{{i.pic}}" class="card-img-top"  style='padding:10px 0px 0px; max-height:250px;'>
+  <div class="card-body">
+    <h4 class="card-title" id="namepr{{i.item_id}}" >{{i.name}}</h4>
+    <h5 class="card-title">R$ <span id="pricepr{{i.item_id}}" >{{i.price}}</span></h5>
+    <p class="card-text">{{i.desc}}</p>
+    {% if current_user.is_admin %}
+    <form action="{{ url_for('food.delete_dish', item_id=i.item_id) }}" method="post">
+    <button class="btn btn-danger" type="submit">Delete</button>
+    </form>
+
+    {% else %}
+    <span id="divpr{{i.item_id}}" class="divpr" >
+    <button  id="pr{{i.item_id}}" class="btn btn-danger cart">Add to cart</button>
+    </span>
+    {% endif %}
+  </div>
+</div>
+{% endfor %}
+</div>
+{% endfor %}
+
+
+<div class="d-flex justify-content-center" style="padding:25px 0px 50px;">
+  <a href='/cart' ><button type="submit" class="btn btn-outline-warning">Go To Cart</button> </a>
+</div>
+
+
+{% endblock body %}
+
+
+{%block js%}
+
+<script src="{{ url_for('static', filename='js/menu.js') }}"></script>
+
+{%endblock js%}

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Cart
+{% endblock title %}
+
+{% block body %}
+
+<!-- <h1>Cart Page</h1> -->
+
+<div class="container py-2">
+  <h2>Review your order</h2>
+  <div class="col c_cart">
+  <form method="post" action="/cart">
+    <input type="hidden" name="items_json" id="itemsjson">
+    <input type="hidden" name="table_value" id="tableValueInput">
+  <div class="my-4">
+
+    <ul class="list-group" id="items"></ul>
+    
+    <ul class="list-group" style="padding:10px 15px 10px" >
+      <input type="hidden" name="price" id="price_input" >
+      <strong><span id="total">Total =  0</span></strong>
+    </ul>
+
+
+  </div>
+
+    <button type="submit"  class="btn btn-info" style="margin:5px;" >Place Order</button>
+    <button class="btn btn-warning clear_cart" style="margin:5px;" >Clear cart</button>
+    <a href="{{ url_for('.home') }}"  class="btn btn-danger" style="margin:5px;" >Add More items</a>
+    </form>
+  </div>
+</div>
+
+
+
+{% endblock body %}
+
+{%block js%}
+
+<script src="{{ url_for('static', filename='js/cart.js') }}"></script>
+
+{%endblock js%}

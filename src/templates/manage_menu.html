@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{%block title%} Menu {%endblock title%}
+
+{% block body %}
+
+{% for message in messages %}
+    <div class="alert alert-success alert-dismissable fade show" role="alert">
+        <strong>{{message}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{% endfor %}
+
+<div class="row">
+        <div class="col-lg-10 col-lg-offset-1">
+                <div class="panel panel-default">
+                        <form method="POST" action="{{ url_for('.manage_menu') }}" enctype="multipart/form-data">
+                                <div class="panel-body">
+                                        <div class="row">
+                                                {{ form.csrf_token }}
+                                                <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                                <label>Nome</label>
+                                                                {{ form.name(class='form-control') }}
+                                                        </div>
+                                                        <div class="form-group">
+                                                                {{ form.category.label }}
+                                                                {% if form.category.errors %}
+                                                                {% for e in form.category.errors %}
+                                                                <p class="help-block">{{ e }}</p>
+                                                                {% endfor %}
+                                                                {% endif %}
+                                                                {{ form.category(class_="form-select") }}
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                                <label>Valor</label>
+                                                                {{ form.price(class='form-control') }}
+                                                        </div>
+
+                                                </div>
+                                                <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                                <div class="form-group">
+                                                                        <label>Descrição</label>
+                                                                        {{ form.desc(class='form-control') }}
+                                                                </div>
+
+                                                                <label>Imagem do Produto</label>
+                                                                {{ form.pic(class='form-control') }}
+                                                        </div>
+                                                </div>
+                                        </div>
+                                </div><br>
+
+                                <div class="panel-footer">
+                                        {{ form.submit }}
+                                </div>
+                        </form>
+                </div>
+        </div>
+</div>
+
+{% endblock body %}
+

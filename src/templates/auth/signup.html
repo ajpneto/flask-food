@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block title %}Register{% endblock %}
+{% block body %}
+<div class="container">
+    <h3 class="title">Cadastre-se aqui</h3>
+    <div class="col-md-4">
+            <form method="POST" action="{{ url_for('.signup') }}">
+                {{ form.hidden_tag() }}
+            <div class="field">
+                <div class="control">
+                    {{ form.name.label }}<br>
+                    {% if form.name.errors %}
+                        {% for e in form.name.errors %}
+                            <p class="help-block">{{ e }}</p>
+                        {% endfor %}
+                    {% endif %}
+                    {{ form.name(class_='form-control') }}
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    {{ form.age.label }}<br>
+                    {% if form.age.errors %}
+                        {% for e in form.age.errors %}
+                            <p class="help-block">{{ e }}</p>
+                        {% endfor %}
+                    {% endif %}
+                    {{ form.age(class_='form-control') }}
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    {{ form.address.label }}<br>
+                    {% if form.address.errors %}
+                        {% for e in form.address.errors %}
+                            <p class="help-block">{{ e }}</p>
+                        {% endfor %}
+                    {% endif %}
+                    {{ form.address(class_='form-control') }}
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    {{ form.phone.label }}<br>
+                    {% if form.phone.errors %}
+                        {% for e in form.phone.errors %}
+                            <p class="help-block">{{ e }}</p>
+                        {% endfor %}
+                    {% endif %}
+                    {{ form.phone(class_='form-control') }}
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    {{ form.email.label }}<br>
+                    {% if form.email.errors %}
+                        {% for e in form.email.errors %}
+                            <p class="help-block">{{ e }}</p>
+                        {% endfor %}
+                    {% endif %}
+                    {{ form.email(class_='form-control') }}
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    {{ form.password.label }}<br>
+                    {% if form.password.errors %}
+                        {% for e in form.password.errors %}
+                            <p class="help-block">{{ e }}</p>
+                        {% endfor %}
+                    {% endif %}
+                    {{ form.password(class_='form-control') }}
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    {{ form.cpassword.label }}<br>
+                    {% if form.cpassword.errors %}
+                        {% for e in form.cpassword.errors %}
+                            <p class="help-block">{{ e }}</p>
+                        {% endfor %}
+                    {% endif %}
+                    {{ form.cpassword(class_='form-control') }}
+                </div>
+            </div><br>
+            <button class="button is-block is-info is-large is-fullwidth">Cadastrar</button>
+            </form>
+    </div>
+</div>
+{% endblock %}
